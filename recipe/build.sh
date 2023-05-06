@@ -27,6 +27,10 @@ if [[ "${target_platform}" == linux-aarch64 ]]; then
   TARGET="ARMV8"
   BINARY="64"
   DYNAMIC_ARCH=1
+elif [[ "${target_platform}" == linux-armv7l ]]; then
+  TARGET="ARMV7"
+  BINARY="32"
+  DYNAMIC_ARCH=1
 elif [[ "${target_platform}" == linux-ppc64le ]]; then
   TARGET="POWER8"
   BUILD_BFLOAT16=1
@@ -93,3 +97,14 @@ if [[ "${target_platform}" == osx-arm64 ]]; then
   ln -sf $PREFIX/lib/libopenblas${SYMBOLSUFFIX}.0.dylib $PREFIX/lib/libopenblas${SYMBOLSUFFIX}_vortexp-r${PKG_VERSION}.dylib
   ln -sf $PREFIX/lib/libopenblas${SYMBOLSUFFIX}.0.dylib $PREFIX/lib/libopenblas${SYMBOLSUFFIX}_armv8p-r${PKG_VERSION}.dylib
 fi
+
+if [[ "${target_platform}" == linux-armv7l ]]; then
+  TARGET_LOWER=$(echo "$TARGET" | tr '[:upper:]' '[:lower:]')
+  ls -alh $PREFIX/lib/libopenblas*
+  ln -sf $PREFIX/lib/libopenblas${SYMBOLSUFFIX}_${TARGET_LOWER}p-r${PKG_VERSION}.so $PREFIX/lib/libopenblas${SYMBOLSUFFIX}p-r${PKG_VERSION}.so
+  # rm $PREFIX/lib/libopenblas${SYMBOLSUFFIX}.so.0
+  # mv $PREFIX/lib/libopenblas${SYMBOLSUFFIX}_${TARGET_LOWER}p-r${PKG_VERSION}.so $PREFIX/lib/libopenblas${SYMBOLSUFFIX}p-r${PKG_VERSION}.so
+  # ln -sf $PREFIX/lib/libopenblas${SYMBOLSUFFIX}p-r${PKG_VERSION}.so $PREFIX/lib/libopenblas${SYMBOLSUFFIX}.so.0
+  # ln -sf $PREFIX/lib/libopenblas${SYMBOLSUFFIX}p-r${PKG_VERSION}.so $PREFIX/lib/libopenblas${SYMBOLSUFFIX}_${TARGET_LOWER}p-r${PKG_VERSION}.so
+fi
+
