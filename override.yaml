@@ -1,0 +1,9 @@
+
+INTERFACE64:
+- '0'
+SYMBOLSUFFIX:
+- ''
+USE_OPENMP:
+- '0'
+name_suffix:
+- ''
